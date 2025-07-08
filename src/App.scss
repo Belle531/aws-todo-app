@@ -1,0 +1,174 @@
+// src/App.scss
+
+// Define your color theme variables
+$primary-color: #4A90E2;    // A vibrant blue for main actions
+$secondary-color: #50E3C2;  // A fresh teal for completed items/accents
+$accent-color: #F5A623;     // A warm orange for highlights
+$muted-color: #E0E0E0;      // A light gray for backgrounds and borders
+$highlight-color: #FFFFFF;  // Pure white for card backgrounds and text
+$text-color: #333333;       // Dark gray for general text
+$danger-color: #dc3545;     // Red for delete actions
+
+// Global styles for the body
+body {
+  font-family: 'Inter', sans-serif; // Using the Inter font
+  background-color: $muted-color; // Light gray background
+  color: $text-color; // Dark text color
+  display: flex;
+  justify-content: center; // Center content horizontally
+  align-items: center; // Center content vertically
+  min-height: 100vh; // Full viewport height
+  margin: 0; // Remove default body margin
+  padding: 20px; // Add some padding around the app for smaller screens
+  box-sizing: border-box; // Include padding in element's total width and height
+}
+
+// Main container for the entire Todo app
+.app-container {
+  background-color: $highlight-color; // White background for the app card
+  padding: 30px; // Inner spacing
+  border-radius: 15px; // Rounded corners for the card
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); // Soft shadow for depth
+  width: 100%; // Take full width on small screens
+  max-width: 500px; // Max width for larger screens
+  box-sizing: border-box; // Ensure padding is included in the width
+  h1 { // Nested styling for the main heading
+    text-align: center;
+    color: $primary-color;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+  }
+}
+
+// Section for the input field and add button
+.input-section {
+  display: flex; // Use flexbox for horizontal layout
+  gap: 10px; // Space between input and button
+  margin-bottom: 20px; // Space below this section
+
+  input[type="text"] { // Nested styling for the text input
+    flex-grow: 1; // Allows input to take available space
+    padding: 12px 15px; // Inner spacing
+    border: 1px solid $muted-color; // Light gray border
+    border-radius: 8px; // Rounded corners
+    font-size: 16px; // Font size
+    outline: none; // Remove default outline on focus
+    transition: border-color 0.3s ease; // Smooth transition for border color
+
+    &:focus { // Styling when input is focused
+      border-color: $primary-color; // Highlight border with primary color
+    }
+  }
+
+  button { // Nested styling for the add button
+    padding: 12px 20px; // Inner spacing
+    background-color: $primary-color; // Primary background color
+    color: $highlight-color; // White text color
+    border: none; // No border
+    border-radius: 8px; // Rounded corners
+    cursor: pointer; // Pointer cursor on hover
+    font-size: 16px; // Font size
+    transition: background-color 0.3s ease, transform 0.2s ease; // Smooth transitions
+
+    &:hover { // Styling on hover
+      background-color: darken($primary-color, 10%); // Slightly darker primary color
+      transform: translateY(-2px); // Slight lift effect
+    }
+
+    &:active { // Styling on click
+      transform: translateY(0); // Reset lift effect
+    }
+  }
+}
+
+// Section for displaying the todo list
+.list-section {
+  ul { // Nested styling for the unordered list
+    list-style: none; // Remove bullet points
+    padding: 0; // Remove default padding
+    margin: 0; // Remove default margin
+
+    li { // Nested styling for each list item (todo)
+      display: flex; // Use flexbox for horizontal layout
+      align-items: center; // Align items vertically in the center
+      background-color: lighten($muted-color, 5%); // Slightly lighter gray background
+      padding: 12px 15px; // Inner spacing
+      margin-bottom: 10px; // Space between list items
+      border-radius: 8px; // Rounded corners
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); // Subtle shadow
+      transition: transform 0.2s ease, box-shadow 0.2s ease; // Smooth transitions
+
+      &:hover { // Styling on hover
+        transform: translateY(-2px); // Slight lift effect
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // More pronounced shadow
+      }
+
+      input[type="checkbox"] { // Nested styling for the checkbox
+        margin-right: 10px; // Space to the right of the checkbox
+        transform: scale(1.2); // Slightly larger checkbox
+        cursor: pointer; // Pointer cursor
+      }
+
+      span { // Nested styling for the todo text
+        flex-grow: 1; // Allows text to take available space
+        font-size: 17px; // Font size
+        &.completed { // Nested styling for completed todos
+          text-decoration: line-through; // Strikethrough text
+          color: $secondary-color; // Teal color for completed text
+        }
+      }
+
+      .delete-button { // Nested styling for the delete button
+        background-color: $danger-color; // Red background for danger action
+        color: $highlight-color; // White text color
+        border: none; // No border
+        border-radius: 5px; // Slightly rounded corners
+        padding: 6px 10px; // Inner spacing
+        font-size: 14px; // Smaller font size
+        cursor: pointer; // Pointer cursor
+        margin-left: 15px; // Space to the left of the button
+        transition: background-color 0.3s ease; // Smooth background transition
+
+        &:hover { // Styling on hover
+          background-color: darken($danger-color, 10%); // Slightly darker red
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments using media queries
+@media (max-width: 600px) {
+  body {
+    padding: 10px; // Reduce body padding on small screens
+  }
+  .app-container {
+    padding: 20px; // Reduce app container padding
+    border-radius: 10px; // Slightly less rounded corners
+  }
+
+  .input-section {
+    flex-direction: column; // Stack input and button vertically
+    button {
+      width: 100%; // Make button take full width
+      margin-top: 10px; // Add space between input and button
+    }
+  }
+
+  .list-section ul li {
+    flex-wrap: wrap; // Allow items to wrap to the next line
+    input[type="checkbox"] {
+      order: 1; // Order checkbox first
+    }
+    span {
+      order: 2; // Order text second
+      flex-basis: calc(100% - 40px); // Take most of the width, considering checkbox
+      margin-bottom: 5px; // Space below text if it wraps
+    }
+    .delete-button {
+      order: 3; // Order delete button last
+      margin-left: auto; // Push button to the right
+      margin-top: 5px; // Add space above button if it wraps
+    }
+  }
+}
